@@ -1,0 +1,1 @@
+import{$a as r,ab as i,ca as o,lb as a,pb as s}from"./chunk-33WPD4HQ.js";var c=(()=>{let e=class e{};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=o({type:e,selectors:[["app-forum"]],standalone:!0,features:[s],decls:2,vars:0,template:function(n,p){n&1&&(r(0,"p"),a(1,"forum works!"),i())}});let t=e;return t})();export{c as ForumComponent};

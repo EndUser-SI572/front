@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import {SignInComponent} from "../UI/pages/login/sign-in/sign-in.component";
 import {SignUpComponent} from "../UI/pages/login/sign-up/sign-up.component";
-import {LandingPageComponent} from "../UI/pages/landing-page/landing-page.component";
 import {PageNotFoundComponent} from "../UI/page-not-found/page-not-found.component";
 import {ProfileComponent} from "../UI/pages/profile/profile.component";
 import { ForumComponent} from "../UI/pages/forum/forum.component";
