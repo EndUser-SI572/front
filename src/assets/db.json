@@ -1,0 +1,53 @@
+{
+  "plants": [
+    {
+      "id": "1",
+      "name": "manzana",
+      "scientificName": "fruta",
+      "humidity": 20,
+      "temperature": 38,
+      "temperatureEnd": 50,
+      "image": "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png"
+    },
+    {
+      "id": "2",
+      "name": "zanahoria",
+      "scientificName": "verdura",
+      "humidity": 25,
+      "temperature": 35,
+      "image": "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png"
+    },
+    {
+      "id": "3",
+      "name": "plátano",
+      "scientificName": "fruta",
+      "humidity": 30,
+      "temperature": 32,
+      "image": "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png"
+    },
+    {
+      "id": "4",
+      "name": "lechuga",
+      "scientificName": "verdura",
+      "humidity": 22,
+      "temperature": 36,
+      "image": "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png"
+    },
+    {
+      "id": "5",
+      "name": "pera",
+      "scientificName": "fruta",
+      "humidity": 18,
+      "temperature": 40,
+      "image": "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png"
+    },
+    {
+      "id": "6",
+      "name": "Palta",
+      "scientificName": "fruta",
+      "humidity": 18,
+      "temperature": 40,
+      "image": "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png"
+    }
+  ]
+}

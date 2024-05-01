@@ -1,0 +1,156 @@
+<header>
+  <div class = "container">
+    <img src="/assets/img/logo2.jpeg">
+    <p class="logo">AgriWatch</p>
+  </div>
+</header>
+
+<section id="home">
+  <div class = "container">
+    <div class="text">
+      <h2>Monitor your plants online<br> rigth now</h2>
+      <div class="centered-content">
+        <a (click)="toggleVisibility()" routerLink="/login/sign-in" class="download-button">Let's Go</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="somos">
+  <div class = "container">
+    <div class="img-container"></div>
+    <div class="text">
+      <h2>Somos <span class="color-acento">AgriWatch!</span></h2>
+      <p>Controla y monitorea tus plantas desde cualquier lugar con nuestra aplicación web de IoT. ¡Mantén el equilibrio perfecto de temperatura y humedad para un crecimiento óptimo!</p>
+    </div>
+  </div>
+</section>
+
+<section id="category">
+  <div class="container">
+    <h2>Beneficios</h2>
+    <div class="categorias">
+      <div class="carta">
+        <h3>Conveniencia</h3>
+        <p>Controla y monitorea tus plantas desde cualquier lugar y en cualquier momento, sin importar dónde te encuentres. La conveniencia de acceder a la información de tus plantas en tiempo real te permite tomar decisiones informadas sobre su cuidado</p>
+        <button>Ver más</button>
+      </div>
+      <div class="carta">
+        <h3>Optimización del Crecimiento</h3>
+        <p>Asegura el crecimiento óptimo de tus plantas al mantener un equilibrio perfecto de temperatura y humedad. Con nuestra aplicación, podrás ajustar fácilmente los parámetros ambientales para crear las condiciones ideales para el desarrollo saludable de tus plantas</p>
+        <button>Ver más</button>
+
+      </div>
+
+      <div class="carta">
+        <h3>Ahorro de Tiempo</h3>
+        <p>Simplifica el cuidado de tus plantas al recibir notificaciones automáticas sobre cualquier cambio en las condiciones ambientales. Esto te permite intervenir rápidamente y tomar medidas preventivas, ahorrándote tiempo y esfuerzo en el mantenimiento de tus plantas</p>
+        <button>Ver más</button>
+      </div>
+      <div class="carta">
+        <h3>Conciencia Ambiental</h3>
+        <p>Contribuye al cuidado del medio ambiente al optimizar el uso de recursos como el agua y la energía. Al monitorear de cerca las condiciones de tus plantas, puedes ajustar los niveles de riego y calefacción para reducir el desperdicio y promover prácticas sostenibles de cultivo.</p>
+        <button>Ver más</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="space"></div>
+
+<section class="planes">
+  <div class="container">
+    <p>Elija Plan de <span class="color-acento">AgriWatch</span></p>
+
+    <div class="toggle-buttons">
+      <button class="toggle-button" onclick="toggleContent('content-anual')">Anual</button>
+      <button class="toggle-button" onclick="toggleContent('content-mensual')">Mensual</button>
+    </div>
+
+    <div class="content" id="content-anual">
+      <div class="card">
+        <label>Free</label>
+        <label>$0.00</label>
+        <label>Month</label>
+        <button>Start</button>
+        <ul>
+          <li>🔵 Monitoreo básico de plantas para una visión general</li>
+          <li>🔵 Notificaciones limitadas sobre cambios importantes</li>
+          <li>🔵 Acceso limitado a funciones avanzadas, pero sigue siendo útil</li>
+          <li>🔵 Opción inicial para aquellos que desean explorar la aplicación sin costos</li>
+        </ul>
+      </div>
+      <div class="card">
+        <label>Premium</label>
+        <label>$13.99</label>
+        <label>Month</label>
+        <button>Start</button>
+        <ul>
+          <li>🔵 Acceso completo a funciones avanzadas para un control total</li>
+          <li>🔵 Soporte prioritario al cliente para resolver tus dudas rápidamente</li>
+          <li>🔵 Integración con dispositivos IoT adicionales para una gestión completa</li>
+          <li>🔵 Actualizaciones exclusivas que mejoran constantemente tu experiencia</li>
+        </ul>
+
+      </div>
+    </div>
+
+
+    <div class="content" id="content-mensual">
+      <div class="card">
+        <label>Free</label>
+        <label>$0.00</label>
+        <label>Month</label>
+        <button>Start</button>
+        <ul>
+          <li>🔵 Monitoreo básico de plantas para una visión general</li>
+          <li>🔵 Notificaciones limitadas sobre cambios importantes</li>
+          <li>🔵 Acceso limitado a funciones avanzadas, pero sigue siendo útil</li>
+          <li>🔵 Opción inicial para aquellos que desean explorar la aplicación sin costos</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <label>Premium</label>
+        <label>$20.99</label>
+        <label>Month</label>
+        <button>Start</button>
+        <ul>
+          <li>🔵 Acceso completo a funciones avanzadas para un control total</li>
+          <li>🔵 Soporte prioritario al cliente para resolver tus dudas rápidamente</li>
+          <li>🔵 Integración con dispositivos IoT adicionales para una gestión completa</li>
+          <li>🔵 Actualizaciones exclusivas que mejoran constantemente tu experiencia</li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</section>
+<div class="space"></div>
+
+
+<footer>
+  <div class="container">
+    <img src="/assets/img/logo2.jpeg" alt="#">
+    <div class="icons">
+
+    </div>
+    <p>&copy; AgriWatch 2024 (IOT)</p>
+  </div>
+</footer>
+
+
+<script>
+  function toggleContent(contentId) {
+    const contentSections = document.querySelectorAll('.content');
+
+    contentSections.forEach(section => {
+      if (section.id === contentId) {
+        section.classList.add('active');
+      } else {
+        section.classList.remove('active');
+      }
+    });
+  }
+</script>

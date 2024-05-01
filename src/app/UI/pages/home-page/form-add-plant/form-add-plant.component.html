@@ -1,0 +1,46 @@
+<div class="flex justify-center m-5">
+  <h2 class="block text-3xl text-black font-bold  hover:text-blue-500 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-80"> New Plant</h2>
+</div>
+
+
+<mat-dialog-content class="mat-typography">
+  <div class="row row-cols-3 justify-center">
+    <form [formGroup]="plantForm">
+      <div class="grid gap-4 mb-4 sm:grid-cols-2">
+        <div class="mb-3">
+          <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+          <input id="name" type="text" placeholder="Name" class="form-control form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" formControlName="name">
+        </div>
+        <div class="mb-3">
+          <label for="scientificName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">scientificName</label>
+          <input id="scientificName" type="text" placeholder="scientificName" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" formControlName="scientificName">
+        </div>
+        <div class="mb-3">
+          <label for="humidity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Humidity</label>
+          <input id="humidity" type="number" placeholder="Humidity" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" formControlName="humidity">
+        </div>
+        <div class="mb-3">
+          <label for="temperature" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Temperature</label>
+          <input id="temperature" type="number" placeholder="Temperature" class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" formControlName="temperature">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">URL Image</label>
+        <input id="image" type="text" placeholder="URL image https://..." class="form-control bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" formControlName="image">
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+  <div class="space-x-2">
+    <button (click)="create()" [mat-dialog-close]="true" class="text-white inline-flex rounded-full items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+      Add new Plant
+    </button>
+
+    <button [mat-dialog-close]="true" class="text-white inline-flex rounded-full items-center bg-red-400 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+      Cancel
+    </button>
+  </div>
+</mat-dialog-actions>
+
