@@ -1,4 +1,13 @@
-<app-dialog-form-add-plant></app-dialog-form-add-plant>
+<div class="flex justify-center">
+  <button type="button" (click)="openModel()"
+          class="text-white bg-[#4CAF50] hover:bg-[#388E3C] focus:outline-none font-medium rounded-full px-6 py-3 text-center mb-2">
+    Add Plant
+  </button>
+</div>
+
+<app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
+  <app-form-add-plant (onCloseModel)="closeModel()" [data]="plant"></app-form-add-plant>
+</app-model>
 
 <section class="bg-white dark:bg-gray-900">
   <div class="py-4 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-6 ">
@@ -17,10 +26,10 @@
             <p class="mt-3 mb-4 text-2xl font-light text-gray-500 dark:text-gray-400"> Temp: {{plant.temperature}} °C</p>
             <ul class="flex space-x-4 sm:mt-0">
               <li>
-                <button type="button" class="text-white bg-green-500 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Edit</button>
+                <button type="button" (click)="plant.id && loadPlant(plant)" class="text-white bg-green-500 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Edit</button>
               </li>
               <li>
-                <button type="button" class="text-white bg-amber-700 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">Delete</button>
+                <button type="button" (click)="plant.id && deletePlant(plant.id)" class="text-white bg-amber-700 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900">Delete</button>
               </li>
             </ul>
           </div>

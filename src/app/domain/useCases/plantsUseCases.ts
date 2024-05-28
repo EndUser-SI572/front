@@ -27,5 +27,9 @@ export class PlantsUseCases{
     return this._plantsGateway.updatePlant(id,_plant);
   }
 
+  deletePlant(id: string): Observable<any>{
+    return this._plantsGateway.delete(id);
+  }
+
 
 }

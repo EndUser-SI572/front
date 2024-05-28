@@ -6,12 +6,19 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {provideHttpClient, withFetch} from "@angular/common/http";
 import {PlantsGateway} from "../domain/gateway/plantsGateway";
 import {PlantsApiService} from "../infraestructure/driven-adapter/plants-api/plants-api.service";
+import {provideToastr} from "ngx-toastr";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withHashLocation()),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
-    { provide: PlantsGateway, useClass: PlantsApiService}, provideAnimationsAsync()
+    { provide: PlantsGateway, useClass: PlantsApiService},
+    provideAnimationsAsync(),
+    provideToastr({
+      timeOut: 3000,
+      positionClass: 'toast-center-center',
+      preventDuplicates: true,
+    }),
   ]
 };

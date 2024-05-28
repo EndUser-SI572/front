@@ -30,6 +30,10 @@ export class PlantsApiService extends PlantsGateway{
   }
 
   updatePlant(id: string, _plant: Plants): Observable<any> {
-    return this.http.post(this._url+this.resourceEndpoint+id,_plant);
+    return this.http.put(this._url+this.resourceEndpoint+id,_plant);
+  }
+
+  delete(id: string): Observable<any>{
+    return this.http.delete(this._url+this.resourceEndpoint+id);
   }
 }
