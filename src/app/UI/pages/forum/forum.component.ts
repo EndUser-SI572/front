@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {initFlowbite} from "flowbite";
 
 @Component({
   selector: 'app-forum',
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss'
 })
-export class ForumComponent {
+export class ForumComponent implements OnInit{
+
+  ngOnInit() {
+    initFlowbite();
+  }
 
 }

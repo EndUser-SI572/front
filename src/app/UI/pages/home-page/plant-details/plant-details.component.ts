@@ -4,6 +4,7 @@ import {Plants} from "../../../../domain/models/plants";
 import {PlantsUseCases} from "../../../../domain/useCases/plantsUseCases";
 import {ActivatedRoute} from "@angular/router";
 import {UpperCasePipe} from "@angular/common";
+import {initFlowbite} from "flowbite";
 
 @Component({
   selector: 'app-plant-details',

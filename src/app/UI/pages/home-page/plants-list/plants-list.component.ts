@@ -33,6 +33,7 @@ export class PlantsListComponent implements OnInit{
     )
   }
 
+  // Not is necessary use this function
   goToPlantDetail(id: string): void{
     this.router.navigate(['/plant', id]).then(r => r.valueOf() );
   }
