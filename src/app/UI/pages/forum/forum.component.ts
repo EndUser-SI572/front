@@ -3,8 +3,6 @@ import {initFlowbite} from "flowbite";
 
 @Component({
   selector: 'app-forum',
-  standalone: true,
-  imports: [],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss'
 })

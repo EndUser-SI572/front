@@ -2,7 +2,6 @@ import {PlantsGateway} from "../gateway/plantsGateway";
 import {Observable} from "rxjs";
 import {Plants} from "../models/plants";
 import {Injectable} from "@angular/core";
-import {AbstractControl, ValidationErrors, ɵElement, ɵFormGroupValue, ɵTypedOrUntyped} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'

@@ -1,16 +1,24 @@
 import { Component } from '@angular/core';
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import { Router } from '@angular/router';
+import {UserService} from "../../../../../services/UserService";
 
 @Component({
   selector: 'app-sign-in',
-  standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive
-  ],
   templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.scss'
+  styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent {
+  email: string = '';
+  password: string = '';
 
+  constructor(private _userService: UserService,
+              private router: Router) {}
+
+  onSubmit() {
+    const loginData = {
+      username: this.email,
+      password: this.password
+    };
+    this._userService.login(loginData);
+  }
 }

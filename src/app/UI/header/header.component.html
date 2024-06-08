@@ -1,29 +1,29 @@
-<header>
+<header [hidden]="!loggedIn">
   <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
     <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-      <a href="#" class="flex items-center">
+      <a routerLink="/home" class="flex items-center">
         <img src="/assets/img/agriWatch-.png" class="mr-3 h-6 sm:h-9" alt="AgriWatch Logo" />
         <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">AgriWatch</span>
       </a>
+
       <div class="flex items-center lg:order-2">
-        <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer" src="https://img.freepik.com/vector-gratis/ilustracion-tatuaje-monstruo-estilo-asiatico_23-2150921863.jpg?t=st=1714313050~exp=1714316650~hmac=6e0eb0e686a161acbce16375c61143c91e20f916a887f6776eb500f5f112da5d&w=740" alt="User dropdown">
+        <button>
+          <img id="avatarButton" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer" src="https://res.cloudinary.com/daassyisd/image/upload/v1717831248/g88rarsaols8hmledlcg.png" alt="User dropdown">
+        </button>
 
         <!-- Dropdown menu -->
         <div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
           <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-            <div>Edwin Sierra</div>
-            <div class="font-medium truncate">agriwatch&#64;gmail.com</div>
+            <div>{{user.name +' '+user.lastName}}</div>
+            <div class="font-medium truncate">{{user.username}}</div>
           </div>
           <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
-            <li>
-              <a routerLink="/home" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-            </li>
             <li>
               <a routerLink="/profile" routerLinkActive="active" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View Profile</a>
             </li>
           </ul>
           <div class="py-1">
-            <a href="login/sign-inttlog" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+            <a (click)="logOut()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
           </div>
         </div>
 

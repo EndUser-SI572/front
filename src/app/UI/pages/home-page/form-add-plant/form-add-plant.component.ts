@@ -1,45 +1,46 @@
-import {Component, EventEmitter, inject, Input, OnChanges, Output} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {PlantsUseCases} from "../../../../domain/useCases/plantsUseCases";
-import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {Plants} from "../../../../domain/models/plants";
-import {ToastrService} from "ngx-toastr";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from '@angular/material/dialog';
+import { Plants } from "../../../../domain/models/plants";
+import { ToastrService } from "ngx-toastr";
+import { PlantService } from "../../../../../services/PlantService";
+import { UserService } from "../../../../../services/UserService";
+import { User } from "../../../../domain/models/User";
 
 @Component({
   selector: 'app-form-add-plant',
-  standalone: true,
-  imports: [
-    RouterLink,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatButtonModule
-  ],
   templateUrl: './form-add-plant.component.html',
-  styleUrl: './form-add-plant.component.scss'
+  styleUrls: ['./form-add-plant.component.scss']
 })
-export class FormAddPlantComponent implements OnChanges{
+export class FormAddPlantComponent implements OnChanges, OnInit {
 
   @Output() onCloseModel = new EventEmitter();
+  @Output() plantAddedOrUpdated = new EventEmitter();
   @Input() data: Plants | null = null;
-  plantForm !: FormGroup;
+  plantForm!: FormGroup;
 
-  constructor(private _plantUseCase: PlantsUseCases,
+  user !: User | null
+  constructor(private _plantService: PlantService,
+              private _userService: UserService,
               public dialog: MatDialog,
-              private fb:FormBuilder,
-              private  toastr: ToastrService) {
+              private fb: FormBuilder,
+              private toastr: ToastrService) {
+
     this.plantForm = this.fb.group({
       name: ['', [Validators.required]],
       scientificName: ['', [Validators.required]],
-      humidity: ['', [Validators.required]],
-      temperature: ['', [Validators.required]],
-      image: ['', [Validators.required]],
+      idealHumidity: ['', [Validators.required]],
+      idealTemperature: ['', [Validators.required]],
+      imageUrl: ['', [Validators.required]],
     });
   }
 
-  onClose(){
-    this.onCloseModel.emit(false);
+  ngOnInit(): void {
+    this.user = this._userService.getUser();
+  }
+
+  onClose() {
+    this.onCloseModel.emit();
   }
 
   ngOnChanges(): void {
@@ -47,34 +48,39 @@ export class FormAddPlantComponent implements OnChanges{
       this.plantForm.patchValue({
         name: this.data.name,
         scientificName: this.data.scientificName,
-        humidity: this.data.humidity,
-        temperature: this.data.temperature,
-        image: this.data.image
+        idealHumidity: this.data.idealHumidity,
+        idealTemperature: this.data.idealTemperature,
+        imageUrl: this.data.imageUrl
       });
     }
   }
 
-
   onSubmit() {
     if (this.plantForm.valid) {
+      const formData = {
+        ...this.plantForm.value,
+        userId: this.user?.id
+      };
+
       if (this.data) {
-        this._plantUseCase
-          .updatePlant(this.data.id as string, this.plantForm.value)
-          .subscribe({
-            next: (response: any) => {
-              this.resetPlantForm();
-              this.toastr.success("Plant update success");
-              this.toastr.clear();
-            },
-          });
+        this._plantService.updatePlant(this.data.id, formData).subscribe({
+          next: (response: any) => {
+            this.resetPlantForm();
+            this.toastr.success("Plant update success");
+            this.plantAddedOrUpdated.emit();
+          }
+        });
+
       } else {
-        this._plantUseCase.createPlants(this.plantForm.value).subscribe({
+        this._plantService.addPlant(formData).subscribe({
           next: (response: any) => {
             this.resetPlantForm();
             this.toastr.success("Plant added success");
-          },
+            this.plantAddedOrUpdated.emit();
+          }
         });
       }
+
     } else {
       this.plantForm.markAllAsTouched();
     }
@@ -84,6 +90,4 @@ export class FormAddPlantComponent implements OnChanges{
     this.plantForm.reset();
     this.onClose();
   }
-
 }
-

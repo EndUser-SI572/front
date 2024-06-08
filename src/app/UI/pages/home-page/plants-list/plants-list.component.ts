@@ -1,73 +1,58 @@
-import {Component, OnInit} from '@angular/core';
-import {PlantsUseCases} from "../../../../domain/useCases/plantsUseCases";
-import {Observable} from "rxjs";
-import {Plants} from "../../../../domain/models/plants";
-import {Router, RouterLink} from "@angular/router";
-import { FormAddPlantComponent} from "../form-add-plant/form-add-plant.component";
-import {HumidityComponent} from "../humidity/humidity.component";
-import {ToastrService} from "ngx-toastr";
-import {ModelComponent} from "../../../model/model.component";
+import { Component, OnInit } from '@angular/core';
+import { PlantService } from "../../../../../services/PlantService";
+import { Plants } from "../../../../domain/models/plants";
+import { UserService } from "../../../../../services/UserService";
+import { User } from "../../../../domain/models/User";
 
 @Component({
   selector: 'app-plants-list',
-  standalone: true,
-  imports: [
-    RouterLink,
-    FormAddPlantComponent,
-    HumidityComponent,
-    ModelComponent
-  ],
   templateUrl: './plants-list.component.html',
-  styleUrl: './plants-list.component.scss'
+  styleUrls: ['./plants-list.component.scss']
 })
-export class PlantsListComponent implements OnInit{
 
-  constructor(private _plantsUseCase: PlantsUseCases,private router: Router, private toastr:ToastrService) {}
+export class PlantsListComponent implements OnInit {
 
   isModelOpen = false;
-  response$: Observable<Array<Plants>> | undefined;
-  dates?: Plants[];
-  plant!: Plants;
-
+  dates?: Plants[]
+  plant!: Plants
+  user!: User | null
+  constructor(private _plantService: PlantService,
+              private _userService: UserService) { }
 
   ngOnInit(): void {
-    this.getAllPlants();
+
+    this.user = this._userService.getUser()
+    this.getPlants()
+
   }
 
-  getAllPlants(){
-    this.response$ = this._plantsUseCase.getAllPlants();
-    this.response$?.subscribe( (data: Plants[]) =>{
-        this.dates = data;
-      }
-    )
-  }
-
-  loadPlant(plant: Plants){
-    this.plant = plant;
-    this.openModel();
-  }
-
-  deletePlant(id: string){
-    this._plantsUseCase.deletePlant(id).subscribe({
-      next: (response)=>{
-        this.toastr.success("Plant Delete success");
-        this.getAllPlants();
+  getPlants() {
+    this._plantService.getAll(this.user?.id).subscribe({
+      next: (val: any) => {
+        this.dates = val;
+        console.log(this.dates);
       }
     })
   }
 
-  openModel(){
+  loadPlant(plant: Plants) {
+    this.plant = plant;
+    this.openModel();
+  }
+
+  deletePlant(id: string) {
+
+  }
+
+  openModel() {
     this.isModelOpen = true;
   }
 
-  closeModel(){
+  closeModel() {
     this.isModelOpen = false;
-    this.getAllPlants();
   }
 
-  // Not is necessary use this function
-  goToPlantDetail(id: string): void{
-    this.router.navigate(['/plant', id]).then(r => r.valueOf() );
+  onPlantAddedOrUpdated() {
+    this.getPlants();
   }
-
 }

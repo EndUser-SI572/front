@@ -1,21 +1,45 @@
-import {Component, OnInit} from '@angular/core';
-import {SignInComponent} from "../pages/login/sign-in/sign-in.component";
-import { initFlowbite } from 'flowbite';
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../../../services/UserService';
+import { User } from "../../domain/models/User";
+
 @Component({
   selector: 'app-header',
-  standalone: true,
-  imports: [
-    SignInComponent,
-    RouterLink,
-    RouterLinkActive
-
-  ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.css']
 })
-export class HeaderComponent  implements OnInit{
+export class HeaderComponent implements OnInit {
+
+  user: User = new User();
+  loggedIn: boolean = false;
+
+  constructor(private _userService: UserService, private router: Router) {}
+
   ngOnInit(): void {
-    initFlowbite();
+    this.loadUserData();
+
+    this._userService.userUpdated.subscribe((user: User) => {
+      this.user = user;
+      this.loggedIn = this.isLoged();
+    });
   }
+
+  loadUserData(): void {
+    const user = this._userService.getUser();
+    if (user) {
+      this.user = user;
+      this.loggedIn = this.isLoged();
+    }
+  }
+
+  isLoged(): boolean {
+    return this._userService.isLoggedIn();
+  }
+
+  logOut() {
+    this._userService.logout();
+    this.router.navigate(['/sign-in']);
+    this.loggedIn = false;
+  }
+
 }
