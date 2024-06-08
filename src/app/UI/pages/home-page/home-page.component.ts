@@ -1,12 +1,23 @@
-import { Component } from '@angular/core';
-import { RouterLink } from "@angular/router";
-import { TemperatureComponent } from "./temperature/temperature.component";
-import { HumidityComponent } from "./humidity/humidity.component";
-import {PlantsListComponent} from "./plants-list/plants-list.component";
+import {Component, OnInit} from '@angular/core';
+import {UserService} from "../../../../services/UserService";
+import { Router} from "@angular/router";
+
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent { }
+export class HomePageComponent implements OnInit{
+
+  constructor(private _userService:UserService,
+              private _router:Router){}
+
+  ngOnInit(): void {
+    if(!this._userService.isLoggedIn()){
+      this._router.navigate(['/sign-in'])
+    }
+  }
+
+
+}

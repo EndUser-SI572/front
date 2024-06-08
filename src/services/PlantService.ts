@@ -9,7 +9,7 @@ import {environment} from "../environments/environment";
 export class PlantService {
 
   private _url = environment.serverBasePath;
-  private apiUrl = this._url+'/plant';
+  private apiUrl = this._url+'/api/v1/plant';
 
   constructor(private _http: HttpClient) { }
   getAll(userId:any){

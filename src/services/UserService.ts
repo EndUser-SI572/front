@@ -11,7 +11,7 @@ export class UserService {
 
 
   private basePath = environment.serverBasePath;
-  private apiUrl = this.basePath+'/user';
+  private apiUrl = this.basePath+'/api/v1/user';
 
   userUpdated: EventEmitter<User> = new EventEmitter<User>();
 
@@ -19,7 +19,7 @@ export class UserService {
               private _router: Router) { }
 
   login(item:any){
-    this._http.post('http://localhost:8080/auth/api/v1/login',item).subscribe({
+    this._http.post(`${this.basePath}/auth/api/v1/login`,item).subscribe({
         next:(response:any)=>{
           if (response.status === 'success') {
             sessionStorage.setItem('token', response.token);
@@ -32,7 +32,7 @@ export class UserService {
   }
 
   register(item:any){
-    this._http.post('http://localhost:8080/auth/api/v1/register',item).subscribe({
+    this._http.post(`${this.basePath}/auth/api/v1/register`,item).subscribe({
           next:(response:any)=>{
             if (response.status === 'success') {
               sessionStorage.setItem('token', response.token);
