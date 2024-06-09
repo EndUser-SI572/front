@@ -7,32 +7,37 @@ import { User } from "../../../../domain/models/User";
 @Component({
   selector: 'app-plants-list',
   templateUrl: './plants-list.component.html',
-  styleUrls: ['./plants-list.component.scss']
+  styleUrls: ['./plants-list.component.css']
 })
 
 export class PlantsListComponent implements OnInit {
 
   isModelOpen = false;
-  dates?: Plants[]
-  plant!: Plants
-  user!: User | null
-  constructor(private _plantService: PlantService,
-              private _userService: UserService) { }
+  isLoading = false;
+  dates?: Plants[];
+  plant!: Plants;
+  user!: User | null;
+
+  constructor(private _plantService: PlantService, private _userService: UserService) { }
 
   ngOnInit(): void {
-
-    this.user = this._userService.getUser()
-    this.getPlants()
-
+    this.user = this._userService.getUser();
+    this.getPlants();
   }
 
   getPlants() {
+    this.isLoading = true;
     this._plantService.getAll(this.user?.id).subscribe({
       next: (val: any) => {
         this.dates = val;
         console.log(this.dates);
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        alert('Error fetching plant data.');
       }
-    })
+    });
   }
 
   loadPlant(plant: Plants) {

@@ -1,32 +1,35 @@
-
-
-<div class="flex justify-center">
-  <button type="button" (click)="openModel()"
-          class="text-white bg-[#4CAF50] hover:bg-[#388E3C] focus:outline-none font-medium rounded-full px-6 py-3 text-center mb-2">
-    Add Plant
-  </button>
+<div *ngIf="isLoading" class="flex justify-center items-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden"></span>
+  </div>
 </div>
 
-<app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
-  <app-form-add-plant (onCloseModel)="closeModel()" (plantAddedOrUpdated)="onPlantAddedOrUpdated()" [data]="plant"></app-form-add-plant>
-</app-model>
+<div *ngIf="!isLoading">
+  <div class="flex justify-center">
+    <button type="button" (click)="openModel()"
+            class="text-white bg-[#4CAF50] hover:bg-[#388E3C] focus:outline-none font-medium rounded-full px-6 py-3 text-center mb-2">
+      Add Plant
+    </button>
+  </div>
 
+  <app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
+    <app-form-add-plant (onCloseModel)="closeModel()" (plantAddedOrUpdated)="onPlantAddedOrUpdated()" [data]="plant"></app-form-add-plant>
+  </app-model>
 
-<section class="bg-white dark:bg-gray-900">
-  <div class="py-4 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-6 ">
-    <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-3">
-      @for ( plant of dates; track plant.id){
-        <div class="hover:scale-105 transition-transform items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
+  <section class="bg-white dark:bg-gray-900">
+    <div class="py-4 px-4 mx-auto max-w-screen-xl lg:py-8 lg:px-6 ">
+      <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-3">
+        <div *ngFor="let plant of dates" class="hover:scale-105 transition-transform items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
           <a [routerLink]="['/plant', plant.id]">
-            <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" src="{{plant.imageUrl}}" alt="Image plant">
+            <img class="w-full rounded-lg sm:rounded-none sm:rounded-l-lg" [src]="plant.imageUrl" alt="Image plant">
           </a>
           <div class="p-5">
             <h3 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white hover:text-sky-600">
               <a [routerLink]="['/plant', plant.id]">{{plant.name}}</a>
             </h3>
             <span class="hover:text-green-300 text-gray-500 dark:text-gray-400">{{plant.scientificName}}</span>
-            <p class="mt-3 mb-4 text-2xl font-light text-gray-500 dark:text-gray-400"> Hum: {{plant.idealHumidity}} %</p>
-            <p class="mt-3 mb-4 text-2xl font-light text-gray-500 dark:text-gray-400"> Temp: {{plant.idealTemperature}} °C</p>
+            <p class="mt-3 mb-4 text-2xl font-light text-gray-500 dark:text-gray-400">Hum: {{plant.idealHumidity}} %</p>
+            <p class="mt-3 mb-4 text-2xl font-light text-gray-500 dark:text-gray-400">Temp: {{plant.idealTemperature}} °C</p>
             <ul class="flex space-x-4 sm:mt-0">
               <li>
                 <button type="button" (click)="plant.id && loadPlant(plant)" class="text-white bg-green-500 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Edit</button>
@@ -37,15 +40,10 @@
             </ul>
           </div>
         </div>
-      } @empty {
-        <h1> No existe data</h1>
-      }
+      </div>
+      <div *ngIf="dates?.length === 0" class="text-center">
+        <h1>No existe data</h1>
+      </div>
     </div>
-  </div>
-</section>
-
-
-
-
-
-
+  </section>
+</div>

@@ -42,13 +42,14 @@ export class ProfileComponent implements OnInit {
         age: this.userForm.value.age,
         gender: this.userForm.value.gender,
         cellPhone: this.userForm.value.cellPhone,
-        numberPlants: this.userForm.value.numberPlants
       };
 
       this.userService.update(updatedUser.id, updatedUser).subscribe({
         next: (val: any) => {
           alert("Updated");
           this.userService.saveUser(updatedUser)
+          this.user = this.userService.getUser()
+          console.log(this.user)
         }
       });
     }
