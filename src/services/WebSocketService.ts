@@ -10,7 +10,7 @@ import SockJS from 'sockjs-client';
 export class WebSocketService {
   private stompService: StompService;
   private airDataSubject = new Subject<any>();
-  private soilDataSubject = new Subject<any>();
+  private plantDataSubject = new Subject<any>();
 
   constructor() {
     const stompConfig: StompConfig = {
@@ -23,14 +23,14 @@ export class WebSocketService {
     };
     this.stompService = new StompService(stompConfig);
 
-    // Subscribe to airData topic
+    // subscribe to airData topic
     this.stompService.subscribe('/topic/airData').subscribe((message) => {
       this.airDataSubject.next(JSON.parse(message.body));
     });
 
-    // Subscribe to soilData topic
-    this.stompService.subscribe('/topic/soilData').subscribe((message) => {
-      this.soilDataSubject.next(JSON.parse(message.body));
+    // subscribe to soilData topic
+    this.stompService.subscribe('/topic/plantData').subscribe((message) => {
+      this.plantDataSubject.next(JSON.parse(message.body));
     });
   }
 
@@ -38,7 +38,7 @@ export class WebSocketService {
     return this.airDataSubject.asObservable();
   }
 
-  getSoilDataUpdates(): Observable<any> {
-    return this.soilDataSubject.asObservable();
+  getPlantDataUpdates(): Observable<any> {
+    return this.plantDataSubject.asObservable();
   }
 }

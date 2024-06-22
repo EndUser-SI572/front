@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PlantService } from "../../../../../services/PlantService";
-import { Plants } from "../../../../domain/models/plants";
+import { Plant } from "../../../../domain/models/Plant";
 import { UserService } from "../../../../../services/UserService";
 import { User } from "../../../../domain/models/User";
 import {WebSocketService} from "../../../../../services/WebSocketService";
 import {SensorService} from "../../../../../services/SensorService";
-import {SoilData} from "../../../../domain/models/apiResponse/SoilData";
 import {AirData} from "../../../../domain/models/apiResponse/AirData";
+import {SoilData} from "../../../../domain/models/apiResponse/SoilData";
 
 @Component({
   selector: 'app-plants-list',
@@ -18,12 +18,11 @@ export class PlantsListComponent implements OnInit {
 
   isModelOpen = false;
   isLoading = false;
-  plants: Plants[]=[];
-  plant!: Plants;
+  plant!: Plant;
+  plants: Plant[]=[];
   user!: User | null;
-  soilDataList:SoilData[]=[]
-  soilData!: SoilData
   airData!:AirData
+  soilDataList:SoilData[]=[]
 
   constructor(private _plantService: PlantService,
               private _userService: UserService,
@@ -34,18 +33,25 @@ export class PlantsListComponent implements OnInit {
   ngOnInit(): void {
     this.user = this._userService.getUser()
     this.getAirData()
-    this.getLastSoilData()
     this.getLastAirData()
-
+    this.getLastPlantData()
   }
+
+  getAirData(){
+    this._sensorService.getLastAirData().subscribe((response:any)=>{
+      this.airData=response[0]
+      this.getPlants()
+    })
+  }
+
 
   getPlants() {
     this.isLoading = true;
     this._plantService.getAll(this.user?.id).subscribe({
       next: (val: any) => {
         this.plants = val
-        this.getSoilDataList()
         this.isLoading = false
+        this.getSoilDataList()
       },
       error: () => {
         this.isLoading = false;
@@ -54,46 +60,33 @@ export class PlantsListComponent implements OnInit {
     });
   }
 
-  getSoilDataList(){
-    this._sensorService.getLastSoilData().subscribe((response:any)=>{
-      this.soilDataList=response
 
-      for (let i=0; i<6 || i<this.plants.length; i++){
-        this.plants[i].humidity = this.soilDataList[i].sensorValue
-        this.plants[i].temperature = this.airData.temperatureValue
-      }
-
-      console.log(this.soilDataList)
-    })
-  }
-  getAirData(){
-    this._sensorService.getLastAirData().subscribe((response:any)=>{
-      this.airData=response[0]
-      this.getPlants()
-    })
-  }
-
-  getLastSoilData(){
-    this.webSocketService.getSoilDataUpdates().subscribe((data) => {
-      this.soilData = data;
-
-      const index = this.soilDataList.findIndex(item => item.sensorName === this.soilData.sensorName);
-      this.soilDataList[index] = data
-      this.plants[index].humidity = this.soilDataList[index].sensorValue
-
-    });
-  }
   getLastAirData(){
     this.webSocketService.getAirDataUpdates().subscribe((data) => {
       this.airData = data;
-      for (let i=0; i<6 || i<this.plants.length; i++){
-        this.plants[i].temperature = this.airData.temperatureValue
+    });
+  }
+  getLastPlantData(){
+    this.webSocketService.getPlantDataUpdates().subscribe((data) => {
+      this.plant = data;
+      let plantToUpdate = this.plants.find(plant => plant.id === this.plant.id);
+      if (plantToUpdate) {
+        Object.assign(plantToUpdate, this.plant);
       }
     });
   }
 
+  getSoilDataList(){
+    this._sensorService.getLastSoilData().subscribe((response:any)=>{
+      this.soilDataList=response
+      console.log(this.soilDataList)
+      for (let i=0; i<this.plants.length; i++){
+        this.plants[i].humidity = this.soilDataList[i].sensorValue
+      }
+    })
+  }
 
-  loadPlant(plant: Plants) {
+  loadPlant(plant: Plant) {
     this.plant = plant;
     this.changeModel();
   }

@@ -1,9 +1,8 @@
-export class Plants{
+export class Plant{
   "id"!: string;
   "name"!: string;
   "scientificName"!: string;
   "humidity"!: number;
-  "temperature"!: number;
   "imageUrl"!: string;
   "userId"!:number;
 

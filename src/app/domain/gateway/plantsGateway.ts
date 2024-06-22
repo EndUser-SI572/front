@@ -1,5 +1,5 @@
 import {Observable} from "rxjs";
-import {Plants} from "../models/plants";
+import {Plants} from "../models/Plant";
 
 
 export abstract class PlantsGateway{

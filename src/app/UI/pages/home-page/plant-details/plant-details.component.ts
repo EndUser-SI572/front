@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {Plants} from "../../../../domain/models/plants";
+import {Plant} from "../../../../domain/models/Plant";
 import {ActivatedRoute} from "@angular/router";
 import {PlantService} from "../../../../../services/PlantService";
 
@@ -15,7 +14,7 @@ export class PlantDetailsComponent implements OnInit{
               private _plantService:PlantService) {
   }
 
-  plant?: Plants;
+  plant?: Plant;
 
   ngOnInit(): void {
     const id: string| null = this.route.snapshot.paramMap.get('id');

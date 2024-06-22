@@ -1,6 +1,6 @@
 import {PlantsGateway} from "../gateway/plantsGateway";
 import {Observable} from "rxjs";
-import {Plants} from "../models/plants";
+import {Plants} from "../models/Plant";
 import {Injectable} from "@angular/core";
 
 @Injectable({

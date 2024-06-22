@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from '@angular/material/dialog';
-import { Plants } from "../../../../domain/models/plants";
+import { Plant } from "../../../../domain/models/Plant";
 import { ToastrService } from "ngx-toastr";
 import { PlantService } from "../../../../../services/PlantService";
 import { UserService } from "../../../../../services/UserService";
@@ -16,7 +16,7 @@ export class FormAddPlantComponent implements OnChanges, OnInit {
 
   @Output() onCloseModel = new EventEmitter();
   @Output() plantAddedOrUpdated = new EventEmitter();
-  @Input() data: Plants | null = null;
+  @Input() data: Plant | null = null;
   plantForm!: FormGroup;
 
   user !: User | null
