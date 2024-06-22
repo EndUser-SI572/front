@@ -32,7 +32,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/polyfills/global-shim.ts"
+            ]
           },
           "configurations": {
             "production": {
@@ -92,7 +94,8 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           }
         }
       }

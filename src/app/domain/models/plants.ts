@@ -2,10 +2,9 @@ export class Plants{
   "id"!: string;
   "name"!: string;
   "scientificName"!: string;
-  "idealHumidity"!: number;
-  "idealTemperature"!: number;
+  "humidity"!: number;
+  "temperature"!: number;
   "imageUrl"!: string;
   "userId"!:number;
-
 
 }

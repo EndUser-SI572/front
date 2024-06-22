@@ -3,6 +3,10 @@ import { PlantService } from "../../../../../services/PlantService";
 import { Plants } from "../../../../domain/models/plants";
 import { UserService } from "../../../../../services/UserService";
 import { User } from "../../../../domain/models/User";
+import {WebSocketService} from "../../../../../services/WebSocketService";
+import {SensorService} from "../../../../../services/SensorService";
+import {SoilData} from "../../../../domain/models/apiResponse/SoilData";
+import {AirData} from "../../../../domain/models/apiResponse/AirData";
 
 @Component({
   selector: 'app-plants-list',
@@ -14,24 +18,34 @@ export class PlantsListComponent implements OnInit {
 
   isModelOpen = false;
   isLoading = false;
-  dates?: Plants[];
+  plants: Plants[]=[];
   plant!: Plants;
   user!: User | null;
+  soilDataList:SoilData[]=[]
+  soilData!: SoilData
+  airData!:AirData
 
-  constructor(private _plantService: PlantService, private _userService: UserService) { }
+  constructor(private _plantService: PlantService,
+              private _userService: UserService,
+              private webSocketService: WebSocketService,
+              private _sensorService: SensorService,
+              ) { }
 
   ngOnInit(): void {
-    this.user = this._userService.getUser();
-    this.getPlants();
+    this.user = this._userService.getUser()
+    this.getAirData()
+    this.getLastSoilData()
+    this.getLastAirData()
+
   }
 
   getPlants() {
     this.isLoading = true;
     this._plantService.getAll(this.user?.id).subscribe({
       next: (val: any) => {
-        this.dates = val;
-        console.log(this.dates);
-        this.isLoading = false;
+        this.plants = val
+        this.getSoilDataList()
+        this.isLoading = false
       },
       error: () => {
         this.isLoading = false;
@@ -40,21 +54,59 @@ export class PlantsListComponent implements OnInit {
     });
   }
 
+  getSoilDataList(){
+    this._sensorService.getLastSoilData().subscribe((response:any)=>{
+      this.soilDataList=response
+
+      for (let i=0; i<6 || i<this.plants.length; i++){
+        this.plants[i].humidity = this.soilDataList[i].sensorValue
+        this.plants[i].temperature = this.airData.temperatureValue
+      }
+
+      console.log(this.soilDataList)
+    })
+  }
+  getAirData(){
+    this._sensorService.getLastAirData().subscribe((response:any)=>{
+      this.airData=response[0]
+      this.getPlants()
+    })
+  }
+
+  getLastSoilData(){
+    this.webSocketService.getSoilDataUpdates().subscribe((data) => {
+      this.soilData = data;
+
+      const index = this.soilDataList.findIndex(item => item.sensorName === this.soilData.sensorName);
+      this.soilDataList[index] = data
+      this.plants[index].humidity = this.soilDataList[index].sensorValue
+
+    });
+  }
+  getLastAirData(){
+    this.webSocketService.getAirDataUpdates().subscribe((data) => {
+      this.airData = data;
+      for (let i=0; i<6 || i<this.plants.length; i++){
+        this.plants[i].temperature = this.airData.temperatureValue
+      }
+    });
+  }
+
+
   loadPlant(plant: Plants) {
     this.plant = plant;
-    this.openModel();
+    this.changeModel();
   }
 
   deletePlant(id: string) {
-
+    this._plantService.delete(id).subscribe(()=>{
+      alert("Deleted")
+      this.getPlants()
+    })
   }
 
-  openModel() {
-    this.isModelOpen = true;
-  }
-
-  closeModel() {
-    this.isModelOpen = false;
+  changeModel() {
+    this.isModelOpen = !this.isModelOpen;
   }
 
   onPlantAddedOrUpdated() {

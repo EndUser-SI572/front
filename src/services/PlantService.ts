@@ -27,6 +27,9 @@ export class PlantService {
   getById(id:any){
     return this._http.get(`${this.apiUrl}/${id}`)
   }
+  delete(id:any){
+    return this._http.delete(`${this.apiUrl}/${id}`);
+  }
 
 }
 

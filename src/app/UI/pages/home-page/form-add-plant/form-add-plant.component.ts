@@ -29,8 +29,6 @@ export class FormAddPlantComponent implements OnChanges, OnInit {
     this.plantForm = this.fb.group({
       name: ['', [Validators.required]],
       scientificName: ['', [Validators.required]],
-      idealHumidity: ['', [Validators.required]],
-      idealTemperature: ['', [Validators.required]],
       imageUrl: ['', [Validators.required]],
     });
   }
@@ -48,8 +46,6 @@ export class FormAddPlantComponent implements OnChanges, OnInit {
       this.plantForm.patchValue({
         name: this.data.name,
         scientificName: this.data.scientificName,
-        idealHumidity: this.data.idealHumidity,
-        idealTemperature: this.data.idealTemperature,
         imageUrl: this.data.imageUrl
       });
     }
@@ -61,6 +57,8 @@ export class FormAddPlantComponent implements OnChanges, OnInit {
         ...this.plantForm.value,
         userId: this.user?.id
       };
+
+      console.log(formData);
 
       if (this.data) {
         this._plantService.updatePlant(this.data.id, formData).subscribe({

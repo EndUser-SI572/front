@@ -37,6 +37,7 @@ import {RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
 import {ToastrModule} from "ngx-toastr";
 import {InterceptorService} from "../services/InterceptorService";
+import {WebSocketService} from "../services/WebSocketService";
 
 
 
@@ -91,7 +92,7 @@ import {InterceptorService} from "../services/InterceptorService";
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:InterceptorService,multi:true},
-
+    WebSocketService
   ],
   bootstrap: [AppComponent]
 })

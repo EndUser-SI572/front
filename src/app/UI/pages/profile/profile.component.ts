@@ -47,9 +47,8 @@ export class ProfileComponent implements OnInit {
       this.userService.update(updatedUser.id, updatedUser).subscribe({
         next: (val: any) => {
           alert("Updated");
-          this.userService.saveUser(updatedUser)
+          this.userService.saveUser(val)
           this.user = this.userService.getUser()
-          console.log(this.user)
         }
       });
     }
