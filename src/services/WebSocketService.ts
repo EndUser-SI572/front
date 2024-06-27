@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { StompService, StompConfig } from '@stomp/ng2-stompjs';
 import { Observable, Subject } from 'rxjs';
 import SockJS from 'sockjs-client';
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,10 @@ export class WebSocketService {
   private airDataSubject = new Subject<any>();
   private plantDataSubject = new Subject<any>();
 
+  websocketUrl = environment.websocketUrl
   constructor() {
     const stompConfig: StompConfig = {
-      url: () => new SockJS('http://localhost:8080/ws'),
+      url: () => new SockJS(this.websocketUrl),
       headers: {},
       heartbeat_in: 0,
       heartbeat_out: 20000,

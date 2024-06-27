@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import {User} from "../../../../domain/models/User";
 import {UserService} from "../../../../../services/UserService";
 
@@ -20,7 +19,7 @@ export class SignUpComponent {
       name: ['', Validators.required],
       lastName: ['', Validators.required],
       username: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(0)]],
       gender: ['', Validators.required],
@@ -29,6 +28,7 @@ export class SignUpComponent {
   }
 
   onSubmit() {
+    console.log(this.signUpForm.value);
     if (this.signUpForm.valid) {
       const user: User = this.signUpForm.value;
 
